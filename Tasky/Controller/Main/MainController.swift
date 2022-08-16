@@ -23,6 +23,8 @@ class MainController: UIViewController {
     // MARK: - Methods
     func setupViews() {
         mainView = MainView(frame: view.frame)
+        mainView.tableView.dataSource = self
+        mainView.addAction = addTaskBtnTapped
         [mainView].forEach {
             self.view.addSubview($0)
         }
@@ -30,6 +32,10 @@ class MainController: UIViewController {
     
     func setupConstraints() {
         mainView.anchor(top: view.topAnchor, leading: view.leadingAnchor, bottom: view.bottomAnchor, trailing: view.trailingAnchor)
+    }
+    
+    func addTaskBtnTapped() {
+        self.present(UINavigationController(rootViewController: NewTaskController()), animated: true)
     }
 }
 

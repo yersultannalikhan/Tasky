@@ -7,7 +7,31 @@
 
 import UIKit
 
+extension UIApplication {
+    var keyWindowInConnectedScenes: UIWindow? {
+        return windows.first(where: { $0.isKeyWindow })
+    }
+}
+
 extension UIView {
+    
+    var safeAreaBottom: CGFloat {
+           if #available(iOS 11, *) {
+              if let window = UIApplication.shared.keyWindowInConnectedScenes {
+                  return window.safeAreaInsets.bottom
+              }
+           }
+           return 0
+      }
+
+      var safeAreaTop: CGFloat {
+           if #available(iOS 11, *) {
+              if let window = UIApplication.shared.keyWindowInConnectedScenes {
+                  return window.safeAreaInsets.top
+              }
+           }
+           return 0
+      }
     
     func anchor(top: NSLayoutYAxisAnchor?,
                    leading:NSLayoutXAxisAnchor?,
@@ -18,17 +42,18 @@ extension UIView {
            
            translatesAutoresizingMaskIntoConstraints = false
            
-           guard let top = top,
-               let leading = leading,
-               let bottom = bottom,
-               let trailing = trailing
-               else { return }
-           
-           topAnchor.constraint(equalTo: top, constant: padding.top).isActive = true
-           leadingAnchor.constraint(equalTo: leading, constant: padding.left).isActive = true
-           bottomAnchor.constraint(equalTo: bottom, constant: -padding.bottom).isActive = true
-           trailingAnchor.constraint(equalTo: trailing, constant: -padding.right).isActive = true
-           
+        if let top = top {
+            topAnchor.constraint(equalTo: top, constant: padding.top).isActive = true
+        }
+        if let leading = leading {
+            leadingAnchor.constraint(equalTo: leading, constant: padding.left).isActive = true
+        }
+        if let bottom = bottom {
+            bottomAnchor.constraint(equalTo: bottom, constant: -padding.bottom).isActive = true
+        }
+        if let trailing = trailing {
+            trailingAnchor.constraint(equalTo: trailing, constant: -padding.right).isActive = true
+        }
            
            if size.width != 0 {
                widthAnchor.constraint(equalToConstant: size.width).isActive = true
@@ -39,4 +64,19 @@ extension UIView {
            }
        }
     
+    func anchorCenterX(centerX: NSLayoutXAxisAnchor?) {
+        translatesAutoresizingMaskIntoConstraints = false
+        
+        if let centerX = centerX {
+            self.centerXAnchor.constraint(equalTo: centerX).isActive = true
+        }
+    }
+    
+    func anchorCenterY(centerY: NSLayoutYAxisAnchor?) {
+        translatesAutoresizingMaskIntoConstraints = false
+        
+        if let centerY = centerY {
+            self.centerYAnchor.constraint(equalTo: centerY).isActive = true
+        }
+    }
 }
