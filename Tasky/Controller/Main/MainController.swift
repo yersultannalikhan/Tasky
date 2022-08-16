@@ -6,10 +6,12 @@
 //
 
 import UIKit
+import CoreData
 
 class MainController: UIViewController {
     // MARK: - Properties
     var mainView: MainView!
+    var taskArray = [TaskEntity]()
     // MARK: - LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -19,6 +21,7 @@ class MainController: UIViewController {
         
         setupViews()
         setupConstraints()
+        taskArray = TaskData.getTasks()
     }
     // MARK: - Methods
     func setupViews() {
@@ -35,7 +38,9 @@ class MainController: UIViewController {
     }
     
     func addTaskBtnTapped() {
-        self.present(UINavigationController(rootViewController: NewTaskController()), animated: true)
+        let controller = NewTaskController()
+        controller.delegate = self
+        self.present(UINavigationController(rootViewController: controller), animated: true)
     }
 }
 

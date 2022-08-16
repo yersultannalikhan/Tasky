@@ -11,17 +11,22 @@ class NewTaskController: UIViewController {
 
     //MARK: - Properties
     var mainView: NewTaskView!
+    var delegate: NewTaskDelegate?
     //MARK: - LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
         
         view.backgroundColor = .white
-        navigationItem.title = "New task info"
+        navigationItem.title = "New Task"
         navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(cancelBarBtnTapped(_ :)))
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .save, target: self, action: #selector(saveBarBtnTapped(_:)))
         
         setupViews()
         setupConstraints()
+    }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.view.endEditing(true)
     }
     //MARK: - Methods
     func setupViews() {
@@ -39,10 +44,21 @@ class NewTaskController: UIViewController {
     }
     
     @objc func saveBarBtnTapped(_ sender: UIBarButtonItem) {
-        print("save")
+        guard let titleText = mainView.titleTextField.text else { return }
+        if titleText.isEmpty {
+            mainView.titleTextField.layer.borderColor = UIColor.red.cgColor
+        } else {
+            let task = TaskData(title: titleText, date: nil, status: false)
+            if mainView.dateSwitch.isOn {
+                task.date = mainView.selectedDate
+            }
+            delegate?.addTask(task: task)
+            self.dismiss(animated: true)
+        }
+        
     }
     
     @objc func dateSwitchTapped(_ sender: UISwitch) {
-        print(sender.isOn)
+        mainView.isDateTextFieldHidden(!sender.isOn)
     }
 }
