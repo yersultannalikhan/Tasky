@@ -9,12 +9,13 @@ import UIKit
 import CoreData
 
 protocol NewTaskDelegate {
-    func addTask(task: TaskData)
+    func addTask(task: TaskData, index: Int?)
 }
 
 extension MainController: UITableViewDataSource, NewTaskDelegate {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = UITableViewCell(style: .subtitle, reuseIdentifier: "cell")
+        cell.selectionStyle = .none
         let task = taskArray[indexPath.row]
         cell.textLabel?.text = task.title
         if let taskDate = task.date {
@@ -29,7 +30,7 @@ extension MainController: UITableViewDataSource, NewTaskDelegate {
         return taskArray.count
     }
     
-    func addTask(task: TaskData) {
+    func addTask(task: TaskData, index: Int?) {
         let managedContext = AppDelegate.sharedAppDelegate.coreDataStack.managedContext
         let newTask = TaskEntity(context: managedContext)
         newTask.setValue(task.title, forKey: #keyPath(TaskEntity.title))

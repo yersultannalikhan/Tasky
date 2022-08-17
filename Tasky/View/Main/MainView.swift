@@ -12,6 +12,7 @@ class MainView: UIView {
     var addAction: (() -> ())?
     var tableView: UITableView = {
         let tableView = UITableView()
+        tableView.separatorInset = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)
         return tableView
     }()
     var bottomView: UIView = {

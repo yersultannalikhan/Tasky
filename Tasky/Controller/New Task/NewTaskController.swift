@@ -12,6 +12,8 @@ class NewTaskController: UIViewController {
     //MARK: - Properties
     var mainView: NewTaskView!
     var delegate: NewTaskDelegate?
+    var task: TaskEntity?
+    var taskIndex: Int? = nil
     //MARK: - LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,6 +33,7 @@ class NewTaskController: UIViewController {
     //MARK: - Methods
     func setupViews() {
         mainView = NewTaskView(frame: view.frame)
+        
         mainView.dateSwitchAction = dateSwitchTapped(_:)
         view.addSubview(mainView)
     }
@@ -52,7 +55,7 @@ class NewTaskController: UIViewController {
             if mainView.dateSwitch.isOn {
                 task.date = mainView.selectedDate
             }
-            delegate?.addTask(task: task)
+            delegate?.addTask(task: task, index: taskIndex)
             self.dismiss(animated: true)
         }
         

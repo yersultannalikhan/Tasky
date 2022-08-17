@@ -12,7 +12,7 @@ class NewTaskView: UIView {
     // MARK: - Properties
     var selectedDate = Date()
     var dateSwitchAction: ((_ sender: UISwitch) -> ())?
-    
+
     let titleTextField: UITextField = {
         let tf = UITextField()
         tf.placeholder = "Title"

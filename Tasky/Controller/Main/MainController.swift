@@ -27,6 +27,7 @@ class MainController: UIViewController {
     func setupViews() {
         mainView = MainView(frame: view.frame)
         mainView.tableView.dataSource = self
+        mainView.tableView.delegate = self
         mainView.addAction = addTaskBtnTapped
         [mainView].forEach {
             self.view.addSubview($0)
