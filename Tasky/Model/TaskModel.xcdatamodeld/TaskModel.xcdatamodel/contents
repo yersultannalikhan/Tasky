@@ -3,9 +3,10 @@
     <entity name="TaskEntity" representedClassName=".TaskEntity" syncable="YES">
         <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="status" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="taskID" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
         <attribute name="title" optional="YES" attributeType="String"/>
     </entity>
     <elements>
-        <element name="TaskEntity" positionX="-63" positionY="-18" width="128" height="74"/>
+        <element name="TaskEntity" positionX="-63" positionY="-18" width="128" height="103"/>
     </elements>
 </model>

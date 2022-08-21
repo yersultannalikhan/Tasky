@@ -2,7 +2,7 @@
 //  TaskEntity+CoreDataClass.swift
 //  Tasky
 //
-//  Created by Yersultan Nalikhan on 17.08.2022.
+//  Created by Yersultan Nalikhan on 22.08.2022.
 //
 //
 

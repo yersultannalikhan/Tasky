@@ -2,13 +2,12 @@
 //  TaskEntity+CoreDataProperties.swift
 //  Tasky
 //
-//  Created by Yersultan Nalikhan on 17.08.2022.
+//  Created by Yersultan Nalikhan on 22.08.2022.
 //
 //
 
 import Foundation
 import CoreData
-import UIKit
 
 
 extension TaskEntity {
@@ -17,9 +16,10 @@ extension TaskEntity {
         return NSFetchRequest<TaskEntity>(entityName: "TaskEntity")
     }
 
-    @NSManaged public var title: String?
     @NSManaged public var date: Date?
     @NSManaged public var status: Bool
+    @NSManaged public var title: String
+    @NSManaged public var taskID: UUID
 
 }
 

@@ -43,7 +43,7 @@ class MainView: UIView {
     
     // MARK: - Methods
     func setupViews() {
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
+        tableView.register(CellView.self, forCellReuseIdentifier: "cell")
 
         bottomView.addSubview(addButton)
         

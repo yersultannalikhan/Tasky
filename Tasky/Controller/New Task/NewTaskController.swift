@@ -8,12 +8,10 @@
 import UIKit
 
 class NewTaskController: UIViewController {
-
     //MARK: - Properties
-    var mainView: NewTaskView!
+    private var mainView: NewTaskView!
     var delegate: NewTaskDelegate?
-    var task: TaskEntity?
-    var taskIndex: Int? = nil
+    var viewModel: NewTaskViewModelType?
     //MARK: - LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -25,6 +23,10 @@ class NewTaskController: UIViewController {
         
         setupViews()
         setupConstraints()
+        
+        if viewModel != nil {
+            mainView.viewModel = viewModel
+        }
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -41,6 +43,7 @@ class NewTaskController: UIViewController {
     func setupConstraints() {
         mainView.anchor(top: view.topAnchor, leading: view.leadingAnchor, bottom: view.bottomAnchor, trailing: view.trailingAnchor)
     }
+    
     //MARK: - Actions
     @objc func cancelBarBtnTapped(_ sender: UIBarButtonItem) {
         self.dismiss(animated: true)
@@ -51,11 +54,19 @@ class NewTaskController: UIViewController {
         if titleText.isEmpty {
             mainView.titleTextField.layer.borderColor = UIColor.red.cgColor
         } else {
-            let task = TaskData(title: titleText, date: nil, status: false)
+            let managedContext = AppDelegate.sharedAppDelegate.coreDataStack.managedContext
+            let newTask = TaskEntity(context: managedContext)
+            newTask.setValue(titleText, forKey: #keyPath(TaskEntity.title))
+            newTask.setValue(false, forKey: #keyPath(TaskEntity.status))
+            newTask.setValue(UUID(), forKey: #keyPath(TaskEntity.taskID))
             if mainView.dateSwitch.isOn {
-                task.date = mainView.selectedDate
+                newTask.setValue(mainView.selectedDate, forKey: #keyPath(TaskEntity.date))
+            } else {
+                newTask.setNilValueForKey(#keyPath(TaskEntity.date))
             }
-            delegate?.addTask(task: task, index: taskIndex)
+            AppDelegate.sharedAppDelegate.coreDataStack.saveContext() // Save changes in CoreData
+
+            delegate?.addTask()
             self.dismiss(animated: true)
         }
         

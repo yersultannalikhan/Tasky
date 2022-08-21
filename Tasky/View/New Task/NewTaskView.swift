@@ -10,6 +10,19 @@ import UIKit
 class NewTaskView: UIView {
 
     // MARK: - Properties
+    var viewModel: NewTaskViewModelType? {
+        didSet {
+            guard let viewModel = viewModel else { return }
+            titleTextField.text = viewModel.title
+            if let date = viewModel.date {
+                datePicker.date = date
+                dateTextField.text = viewModel.dateString
+                dateSwitch.isOn = true
+                dateSwitchTapped(dateSwitch)
+            }
+        }
+    }
+    
     var selectedDate = Date()
     var dateSwitchAction: ((_ sender: UISwitch) -> ())?
 

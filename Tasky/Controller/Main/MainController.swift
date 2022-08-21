@@ -11,7 +11,7 @@ import CoreData
 class MainController: UIViewController {
     // MARK: - Properties
     var mainView: MainView!
-    var taskArray = [TaskEntity]()
+    var viewModel: MainViewModelType?
     // MARK: - LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -21,7 +21,9 @@ class MainController: UIViewController {
         
         setupViews()
         setupConstraints()
-        taskArray = TaskData.getTasks()
+        
+        viewModel = MainViewModel()
+        mainView.tableView.reloadData()
     }
     // MARK: - Methods
     func setupViews() {

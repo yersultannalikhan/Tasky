@@ -9,41 +9,26 @@ import UIKit
 import CoreData
 
 protocol NewTaskDelegate {
-    func addTask(task: TaskData, index: Int?)
+    func addTask()
 }
 
 extension MainController: UITableViewDataSource, NewTaskDelegate {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = UITableViewCell(style: .subtitle, reuseIdentifier: "cell")
+        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as? CellView
+        let cellViewModel = viewModel?.viewModelForCellForRowAt(indexPath: indexPath)
+        guard let cell = cell, let cellViewModel = cellViewModel else { return UITableViewCell() }
         cell.selectionStyle = .none
-        let task = taskArray[indexPath.row]
-        cell.textLabel?.text = task.title
-        if let taskDate = task.date {
-            let dateFormatter = DateFormatter()
-            dateFormatter.dateFormat = "dd MMMM yyyy"
-            cell.detailTextLabel?.text = dateFormatter.string(from: taskDate)
-        }
+        cell.viewModel = cellViewModel
         return cell
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return taskArray.count
+        return viewModel?.numberOfRows() ?? 0
     }
     
-    func addTask(task: TaskData, index: Int?) {
-        let managedContext = AppDelegate.sharedAppDelegate.coreDataStack.managedContext
-        let newTask = TaskEntity(context: managedContext)
-        newTask.setValue(task.title, forKey: #keyPath(TaskEntity.title))
-        newTask.setValue(task.status, forKey: #keyPath(TaskEntity.status))
-        if let taskDate = task.date {
-            newTask.setValue(taskDate, forKey: #keyPath(TaskEntity.date))
-        } else {
-            newTask.setNilValueForKey(#keyPath(TaskEntity.date))
-        }
-        self.taskArray.append(newTask)
-        AppDelegate.sharedAppDelegate.coreDataStack.saveContext() // Save changes in CoreData
-                   
+    func addTask() {
         DispatchQueue.main.async {
+            self.viewModel = MainViewModel()
             self.mainView.tableView.reloadData()
         }
     }
