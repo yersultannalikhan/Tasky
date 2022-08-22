@@ -8,8 +8,10 @@
 import Foundation
 
 protocol NewTaskViewModelType {
-    var indexOfTask: Int? { get }
     var title: String  { get }
+    var newTaskCreationType: NewTaskCreationType { get }
     var date: Date? { get }
     var dateString: String? { get }
+    func createTask(title: String, date: Date?, completionHandler: @escaping () -> Void)
+    func insertTask(title: String, date: Date?, completionHandler: @escaping () -> Void)
 }

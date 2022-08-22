@@ -8,7 +8,7 @@
 import Foundation
 
 protocol CellViewModelType {
-    var title: String { get }
+    var titleAttributedText: NSMutableAttributedString { get }
     var status: Bool { get }
     var dateString: String? { get }
 }

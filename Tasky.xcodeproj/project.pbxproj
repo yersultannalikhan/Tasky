@@ -30,6 +30,7 @@
 		FAFABD3628B2CC0100CB6FF0 /* NewTaskViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAFABD3528B2CC0100CB6FF0 /* NewTaskViewModel.swift */; };
 		FAFABD3D28B2DCF600CB6FF0 /* TaskEntity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAFABD3B28B2DCF600CB6FF0 /* TaskEntity+CoreDataClass.swift */; };
 		FAFABD3E28B2DCF600CB6FF0 /* TaskEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAFABD3C28B2DCF600CB6FF0 /* TaskEntity+CoreDataProperties.swift */; };
+		FAFABD4028B429D300CB6FF0 /* MainCont+NewTaskDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAFABD3F28B429D300CB6FF0 /* MainCont+NewTaskDelegate.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -58,6 +59,7 @@
 		FAFABD3528B2CC0100CB6FF0 /* NewTaskViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewTaskViewModel.swift; sourceTree = "<group>"; };
 		FAFABD3B28B2DCF600CB6FF0 /* TaskEntity+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TaskEntity+CoreDataClass.swift"; sourceTree = "<group>"; };
 		FAFABD3C28B2DCF600CB6FF0 /* TaskEntity+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TaskEntity+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		FAFABD3F28B429D300CB6FF0 /* MainCont+NewTaskDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MainCont+NewTaskDelegate.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -99,6 +101,7 @@
 			isa = PBXGroup;
 			children = (
 				FA1F928828ABBADE00EA78BE /* Controller */,
+				FAD014C228ABE10000A16E84 /* New Task */,
 				FA1F928628ABBACB00EA78BE /* View */,
 				FA1F928528ABBAC000EA78BE /* Model */,
 				FAFABD2A28B2C5B400CB6FF0 /* Protocol */,
@@ -143,7 +146,6 @@
 		FA1F928828ABBADE00EA78BE /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				FAD014C228ABE10000A16E84 /* New Task */,
 				FAD014BD28ABD1EA00A16E84 /* Main */,
 			);
 			path = Controller;
@@ -176,6 +178,7 @@
 				FA1F927528ABBA7E00EA78BE /* MainController.swift */,
 				FAD014BE28ABD1FD00A16E84 /* MainVCont+DataSource.swift */,
 				FAFABD2628AD783400CB6FF0 /* MainCont+TableViewDelegate.swift */,
+				FAFABD3F28B429D300CB6FF0 /* MainCont+NewTaskDelegate.swift */,
 			);
 			path = Main;
 			sourceTree = "<group>";
@@ -285,6 +288,7 @@
 				FA1F927228ABBA7E00EA78BE /* AppDelegate.swift in Sources */,
 				FAFABD2E28B2C63E00CB6FF0 /* CellViewModelType.swift in Sources */,
 				FA8950F328AC41D900EF2946 /* TaskDataStuck.swift in Sources */,
+				FAFABD4028B429D300CB6FF0 /* MainCont+NewTaskDelegate.swift in Sources */,
 				FAFABD3D28B2DCF600CB6FF0 /* TaskEntity+CoreDataClass.swift in Sources */,
 				FAFABD3428B2C94400CB6FF0 /* CellViewModel.swift in Sources */,
 				FAD014C428ABE12400A16E84 /* NewTaskController.swift in Sources */,

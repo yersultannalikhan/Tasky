@@ -12,6 +12,7 @@ class NewTaskController: UIViewController {
     private var mainView: NewTaskView!
     var delegate: NewTaskDelegate?
     var viewModel: NewTaskViewModelType?
+    
     //MARK: - LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,6 +27,8 @@ class NewTaskController: UIViewController {
         
         if viewModel != nil {
             mainView.viewModel = viewModel
+        } else {
+            viewModel = NewTaskViewModel()
         }
     }
     
@@ -35,8 +38,6 @@ class NewTaskController: UIViewController {
     //MARK: - Methods
     func setupViews() {
         mainView = NewTaskView(frame: view.frame)
-        
-        mainView.dateSwitchAction = dateSwitchTapped(_:)
         view.addSubview(mainView)
     }
     
@@ -52,27 +53,21 @@ class NewTaskController: UIViewController {
     @objc func saveBarBtnTapped(_ sender: UIBarButtonItem) {
         guard let titleText = mainView.titleTextField.text else { return }
         if titleText.isEmpty {
-            mainView.titleTextField.layer.borderColor = UIColor.red.cgColor
+            self.mainView.titleTextField.layer.borderColor = UIColor.red.cgColor
         } else {
-            let managedContext = AppDelegate.sharedAppDelegate.coreDataStack.managedContext
-            let newTask = TaskEntity(context: managedContext)
-            newTask.setValue(titleText, forKey: #keyPath(TaskEntity.title))
-            newTask.setValue(false, forKey: #keyPath(TaskEntity.status))
-            newTask.setValue(UUID(), forKey: #keyPath(TaskEntity.taskID))
-            if mainView.dateSwitch.isOn {
-                newTask.setValue(mainView.selectedDate, forKey: #keyPath(TaskEntity.date))
+            let selectedDate = self.mainView.dateSwitch.isOn ? self.mainView.selectedDate : nil
+            if self.viewModel?.newTaskCreationType == .create {
+                self.viewModel?.createTask(title: titleText, date: selectedDate, completionHandler: {
+                    self.delegate?.addTask()
+                    self.dismiss(animated: true)
+                })
             } else {
-                newTask.setNilValueForKey(#keyPath(TaskEntity.date))
+                self.viewModel?.insertTask(title: titleText, date: selectedDate, completionHandler: {
+                    self.delegate?.insertTask()
+                    self.dismiss(animated: true)
+                })
             }
-            AppDelegate.sharedAppDelegate.coreDataStack.saveContext() // Save changes in CoreData
-
-            delegate?.addTask()
-            self.dismiss(animated: true)
         }
         
-    }
-    
-    @objc func dateSwitchTapped(_ sender: UISwitch) {
-        mainView.isDateTextFieldHidden(!sender.isOn)
     }
 }

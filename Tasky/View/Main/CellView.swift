@@ -11,7 +11,7 @@ class CellView: UITableViewCell {
     var viewModel: CellViewModelType? {
         didSet {
             guard let viewModel = viewModel else { return }
-            textLabel?.text = viewModel.title
+            textLabel?.attributedText = viewModel.titleAttributedText
             detailTextLabel?.text = viewModel.dateString
         }
     }

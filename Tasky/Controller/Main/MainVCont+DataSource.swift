@@ -8,11 +8,9 @@
 import UIKit
 import CoreData
 
-protocol NewTaskDelegate {
-    func addTask()
-}
 
-extension MainController: UITableViewDataSource, NewTaskDelegate {
+
+extension MainController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as? CellView
         let cellViewModel = viewModel?.viewModelForCellForRowAt(indexPath: indexPath)
@@ -25,12 +23,4 @@ extension MainController: UITableViewDataSource, NewTaskDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return viewModel?.numberOfRows() ?? 0
     }
-    
-    func addTask() {
-        DispatchQueue.main.async {
-            self.viewModel = MainViewModel()
-            self.mainView.tableView.reloadData()
-        }
-    }
-
 }

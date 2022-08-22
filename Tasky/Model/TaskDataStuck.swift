@@ -28,6 +28,7 @@ class CoreDataStack {
 
     func saveContext() {
         guard managedContext.hasChanges else { return }
+        managedContext.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
         do {
             try managedContext.save()
         } catch let error as NSError {

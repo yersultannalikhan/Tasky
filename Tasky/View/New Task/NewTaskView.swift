@@ -16,6 +16,7 @@ class NewTaskView: UIView {
             titleTextField.text = viewModel.title
             if let date = viewModel.date {
                 datePicker.date = date
+                selectedDate = date
                 dateTextField.text = viewModel.dateString
                 dateSwitch.isOn = true
                 dateSwitchTapped(dateSwitch)
@@ -24,7 +25,6 @@ class NewTaskView: UIView {
     }
     
     var selectedDate = Date()
-    var dateSwitchAction: ((_ sender: UISwitch) -> ())?
 
     let titleTextField: UITextField = {
         let tf = UITextField()
@@ -131,7 +131,7 @@ class NewTaskView: UIView {
     }
     // MARK: - Actions
     @objc func dateSwitchTapped(_ sender: UISwitch) {
-        dateSwitchAction?(_ : sender)
+        isDateTextFieldHidden(!sender.isOn)
         dateTextField.resignFirstResponder()
     }
     

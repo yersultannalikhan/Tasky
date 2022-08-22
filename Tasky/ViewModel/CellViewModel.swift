@@ -8,11 +8,16 @@
 import Foundation
 
 class CellViewModel: CellViewModelType {
-    
+    // MARK: - Properties
     private var task: TaskEntity
     
-    var title: String {
-        return task.title
+    var titleAttributedText: NSMutableAttributedString {
+        let attributedString = NSMutableAttributedString.init(string: task.title)
+        attributedString.addAttribute(NSAttributedString.Key.strikethroughStyle, value: 1, range: NSRange.init(location: 0, length: attributedString.length))
+        if task.status == false {
+            attributedString.setAttributes([:], range: NSRange(0..<task.title.count))
+        }
+        return attributedString
     }
     
     var status: Bool {
@@ -27,7 +32,7 @@ class CellViewModel: CellViewModelType {
         }
         return nil
     }
-    
+    // MARK: - LifeCycle
     init(task: TaskEntity) {
         self.task = task
     }
